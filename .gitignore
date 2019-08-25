@@ -1,0 +1,6 @@
+media/
+static/
+*.swp
+*.pyc
+__pycache__/
+db.sqlite3
