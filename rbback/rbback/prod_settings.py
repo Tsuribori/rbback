@@ -1,6 +1,8 @@
 from rbback.settings import *
 from get_docker_secret import get_docker_secret
 
+SECRET_KEY = get_docker_secret('SECRET_KEY', autocast_name=False)
+
 DEBUG = False
 
 ALLOWED_HOSTS = ['localhost']
