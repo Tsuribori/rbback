@@ -1,10 +1,10 @@
 FROM python:3.6.9-alpine3.10
-ENV PYTHONBUFFERED
+ENV PYTHONBUFFERED=1
 
-RUN mkdir /app/backend
+RUN mkdir -p /app/backend/
 
-COPY rbback/requirements.txt /app/backend
-RUN pip install -r /project/requirements.txt
+COPY requirements.txt /app/backend
+RUN pip install -r /app/backend/requirements.txt
 
 WORKDIR /app/backend
 
