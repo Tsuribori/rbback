@@ -7,13 +7,15 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['localhost']
 
+USE_X_FORWARDED_HOST = True
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'rbback',
         'USER': 'rbback',
         'PASSWORD': get_docker_secret(
-            'POSTGRES_PASSWORD', autocast_name=False),
+            'postgres_password', autocast_name=False),
         'HOST': 'database',
         'PORT': '5432',
         'TEST': {
