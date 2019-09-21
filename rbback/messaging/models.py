@@ -22,7 +22,7 @@ class Media(models.Model, IDSigner):
     thumbnail = models.ImageField(upload_to=get_thumb_name)
 
     def save(self, *args, **kwargs):
-        self.media_id = self.sign_id(uuid.uuid4)
+        self.media_id = self.sign_id(uuid.uuid4())
         if self.image:
             if not self.make_thumbnail():
                 raise ValidationError('Could not process thumbnail')
@@ -70,7 +70,7 @@ class Thread(models.Model, IDSigner):
         return self.thread_id
 
     def save(self, *args, **kwargs):
-        uuid_id = uuid.uuid4
+        uuid_id = uuid.uuid4()
         self.thread_id = self.sign_id(uuid_id)
         super(Thread, self).save(*args, **kwargs)
 
@@ -79,7 +79,11 @@ class Message(models.Model):
     date = models.DateTimeField(auto_now=True)
     post = models.TextField(max_length=10000, blank=False)
     media = models.ForeignKey(
-        Media, on_delete=models.SET_NULL, null=True, related_name='messages')
+        Media,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='messages')
     thread = models.ForeignKey(
         Thread, on_delete=models.CASCADE, related_name='messages')
 

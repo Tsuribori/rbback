@@ -2,7 +2,7 @@ from rbback.settings import *
 
 SECRET_KEY = open('/run/secrets/secret_key', 'r').read()
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost']
 

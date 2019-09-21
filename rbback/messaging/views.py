@@ -9,6 +9,7 @@ class MediaView(CreateRetrieveViewSet):
     queryset = Media.objects.all()
     serializer_class = MediaSerializer
     parser_classes = [MultiPartParser]
+    lookup_field = 'media_id'
 
 
 class ThreadView(CreateRetrieveViewSet):
