@@ -1,3 +1,4 @@
+import json
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from messaging.models import Media, Thread
@@ -19,14 +20,18 @@ class ThreadField(serializers.RelatedField):
             raise ValidationError('Thread not found.')
 
 
-class MediaField(serializers.RelatedField):
+class MediaField(serializers.Field):
     def __init__(self, *args, **kwargs):
         self.queryset = Media.objects.all()
         super(MediaField, self).__init__(*args, **kwargs)
 
     def to_representation(self, value):
         # return messaging.serializers.MediaSerializer(instance=value).data
-        return value.media_id
+        json_dict = {
+            'thumbnail': value.thumbnail.url,
+            'image': value.image.url
+        }
+        return json_dict
 
     def to_internal_value(self, data):
         try:
