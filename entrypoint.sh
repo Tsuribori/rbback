@@ -17,5 +17,5 @@ python manage.py collectstatic --no-input
 if [[ -n $DEVELOPMENT ]]; then
   python manage.py runserver 0.0.0.0:8000 --settings=$settings_module
 else
-  gunicorn --bind 0.0.0.0:8000 --env DJANGO_SETTINGS_MODULE=$settings_module --access-logfile - --error-logfile - rbback.wsgi:application
+  gunicorn --bind 0.0.0.0:8000 --env DJANGO_SETTINGS_MODULE=$settings_module --error-logfile None rbback.wsgi:application
 fi

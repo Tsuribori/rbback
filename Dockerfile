@@ -12,9 +12,10 @@ WORKDIR /app/backend
 
 COPY . /app/backend
 
+EXPOSE 8000
+RUN chmod +x entrypoint.sh
+
 RUN adduser -D django
 USER django
 
-EXPOSE 8000
-RUN chmod +x entrypoint.sh
 CMD ["./entrypoint.sh"]
