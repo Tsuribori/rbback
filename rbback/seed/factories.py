@@ -8,7 +8,7 @@ class MediaFactory(factory.DjangoModelFactory):
         model = Media
 
     image = factory.django.ImageField(from_path=os.path.join(
-         os.path.dirname(os.path.abspath(__file__)), 'world.jpg'))
+         os.path.dirname(os.path.abspath(__file__)), 'meadow.png'))
 
 
 class ThreadFactory(factory.DjangoModelFactory):
