@@ -125,3 +125,8 @@ MEDIA_URL = '/media/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# File upload settings
+
+MAX_UPLOAD_SIZE = 10485760
+FILE_UPLOAD_PERMISSIONS = 0o644
