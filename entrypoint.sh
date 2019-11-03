@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [[ -n $DEVELOPMENT ]]; then
+if [[ $DEVELOPMENT ]]; then
   settings_module=rbback.dev_settings
 else
   settings_module=rbback.prod_settings
@@ -14,7 +14,7 @@ done
 
 python manage.py collectstatic --no-input
 
-if [[ -n $DEVELOPMENT ]]; then
+if [[ $DEVELOPMENT ]]; then
   python manage.py runserver 0.0.0.0:8000 --settings=$settings_module
 else
   gunicorn --bind 0.0.0.0:8000 --env DJANGO_SETTINGS_MODULE=$settings_module --error-logfile - rbback.wsgi:application
