@@ -1,7 +1,7 @@
 FROM python:3.6.9-alpine3.10
 ENV PYTHONBUFFERED=1
 
-RUN apk update && apk add postgresql-dev gcc python3-dev musl-dev jpeg-dev zlib-dev
+RUN apk update && apk add postgresql-dev gcc python3-dev musl-dev jpeg-dev zlib-dev libmagic
 
 RUN mkdir -p /app/backend/
 
@@ -16,6 +16,7 @@ EXPOSE 8000
 RUN chmod +x entrypoint.sh
 
 RUN adduser -D django
+RUN chown -R django:django /app/backend/rbback/
 USER django
 
 CMD ["./entrypoint.sh"]

@@ -4,7 +4,6 @@ from io import BytesIO
 from django.db import models
 from django.core.files.base import ContentFile
 from django.core.exceptions import ValidationError
-from django.conf import settings
 from PIL import Image
 from messaging.utils import IDSigner
 
@@ -25,8 +24,6 @@ class Media(models.Model, IDSigner):
     def save(self, *args, **kwargs):
         self.media_id = self.sign_id(uuid.uuid4())
         if self.image:
-            if self.image.size > settings.MAX_UPLOAD_SIZE:
-                raise ValidationError('File size too big!')
             if not self.make_thumbnail():
                 raise ValidationError('Could not process thumbnail')
         super(Media, self).save(*args, **kwargs)
