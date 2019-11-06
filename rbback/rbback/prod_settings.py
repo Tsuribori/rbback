@@ -7,6 +7,7 @@ DEBUG = False
 ALLOWED_HOSTS = ['localhost']
 
 USE_X_FORWARDED_HOST = True
+X_FRAME_OPTIONS = 'DENY'
 
 DATABASES = {
     'default': {
