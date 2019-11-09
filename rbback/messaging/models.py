@@ -36,22 +36,11 @@ class Media(models.Model, IDSigner):
         thumb_size = (500, 500)
         image.thumbnail(thumb_size, Image.ANTIALIAS)
 
-        thumb_name, thumb_extension = os.path.splitext(self.image.name)
-        thumb_extension = thumb_extension.lower()
-
+        thumb_name, _ = os.path.splitext(self.image.name)
         thumb_filename = thumb_name + '.jpg'
 
-        if thumb_extension in ['.jpg', '.jpeg']:
-            FTYPE = 'JPEG'
-        elif thumb_extension == '.png':
-            FTYPE = 'PNG'
-        elif thumb_extension == '.gif':
-            FTYPE = 'GIF'
-        else:
-            return False
-
         temp_thumb = BytesIO()
-        image.save(temp_thumb, FTYPE)
+        image.save(temp_thumb, image.format)
         temp_thumb.seek(0)
 
         self.thumbnail.save(
