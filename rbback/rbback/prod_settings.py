@@ -1,10 +1,11 @@
+import os
 from rbback.settings import *
 
 SECRET_KEY = open('/run/secrets/secret_key', 'r').read()
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = [os.environ.get('HOST')]
 
 USE_X_FORWARDED_HOST = True
 X_FRAME_OPTIONS = 'DENY'
