@@ -133,3 +133,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MAX_UPLOAD_SIZE = 10485760
 FILE_UPLOAD_PERMISSIONS = 0o644
 ALLOWED_EXTENSIONS = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif']
+
+
+# Max Messages per Thread
+
+MAX_POSTS = 15

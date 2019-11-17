@@ -32,3 +32,9 @@ class MessageModel(TestCase):
     def test_str(self):
         self.assertEqual(self.message.__str__(), "{}:{}".format(
             str(self.message.date), self.message.post))
+
+    def test_no_post_when_thread_closed(self):
+        thread = ThreadFactory()
+        MessageFactory.create_batch(16, thread=thread)
+        thread.refresh_from_db()
+        self.assertTrue(thread.closed)

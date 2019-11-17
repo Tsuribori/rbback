@@ -5,6 +5,8 @@ SECRET_KEY = open('/run/secrets/secret_key', 'r').read()
 
 DEBUG = False
 
+MAX_POSTS = 500
+
 ALLOWED_HOSTS = [os.environ.get('HOST')]
 
 USE_X_FORWARDED_HOST = True
