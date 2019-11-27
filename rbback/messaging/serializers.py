@@ -41,7 +41,7 @@ class MessageSerializer(serializers.ModelSerializer):
 
     def validate_thread(self, value):
         if value.closed:
-            return ValidationError("Thread closed.")
+            raise ValidationError("Thread closed, cannot reply.")
         return value
 
     class Meta:
