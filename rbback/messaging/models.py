@@ -4,6 +4,7 @@ from io import BytesIO
 from django.db import models
 from django.core.files.base import ContentFile
 from django.core.exceptions import ValidationError
+from django.conf import settings
 from PIL import Image
 from messaging.utils import IDSigner
 
@@ -54,13 +55,15 @@ class Media(models.Model, IDSigner):
 class Thread(models.Model, IDSigner):
     subject = models.CharField(max_length=100, blank=False)
     thread_id = models.CharField(max_length=27, unique=True, blank=False)
+    closed = models.BooleanField(default=False)
 
     def __str__(self):
         return self.thread_id
 
     def save(self, *args, **kwargs):
-        uuid_id = uuid.uuid4()
-        self.thread_id = self.sign_id(uuid_id)
+        if not self.thread_id:
+            uuid_id = uuid.uuid4()
+            self.thread_id = self.sign_id(uuid_id)
         super(Thread, self).save(*args, **kwargs)
 
 
@@ -78,3 +81,10 @@ class Message(models.Model):
 
     def __str__(self):
         return "{}:{}".format(str(self.date), self.post)
+
+    def save(self, *args, **kwargs):
+        if not self.thread.closed:
+            if self.thread.messages.count() >= settings.MAX_POSTS:
+                self.thread.closed = True
+                self.thread.save()
+            super(Message, self).save(*args, **kwargs)

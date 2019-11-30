@@ -39,6 +39,11 @@ class MessageSerializer(serializers.ModelSerializer):
     thread = ThreadField()
     media = MediaField()
 
+    def validate_thread(self, value):
+        if value.closed:
+            raise ValidationError("Thread closed, cannot reply.")
+        return value
+
     class Meta:
         model = Message
         fields = ('id', 'date', 'post', 'thread', 'media')
@@ -50,7 +55,7 @@ class ThreadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Thread
         fields = (
-            'thread_id', 'subject', 'messages')
+            'thread_id', 'subject', 'messages', 'closed')
         extra_kwargs = {
             'url': {'lookup_field': 'thread_id'},
             'thread_id': {'read_only': True}
