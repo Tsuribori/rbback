@@ -16,9 +16,15 @@ class MediaSerializerTest(APITestCase):
 
 
 class ThreadSerializerTest(APITestCase):
+    def setUp(self):
+        self.extra_kwargs = ThreadSerializer.Meta.extra_kwargs
+
     def test_thread_id_read_only(self):
-        extra_kwargs = ThreadSerializer.Meta.extra_kwargs
-        read_only = extra_kwargs['thread_id']['read_only']
+        read_only = self.extra_kwargs['thread_id']['read_only']
+        self.assertTrue(read_only)
+
+    def test_closed_read_only(self):
+        read_only = self.extra_kwargs['closed']['read_only']
         self.assertTrue(read_only)
 
     def test_message_nested(self):

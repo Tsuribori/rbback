@@ -58,5 +58,6 @@ class ThreadSerializer(serializers.ModelSerializer):
             'thread_id', 'subject', 'messages', 'closed')
         extra_kwargs = {
             'url': {'lookup_field': 'thread_id'},
-            'thread_id': {'read_only': True}
+            'thread_id': {'read_only': True},
+            'closed': {'read_only': True}
         }
