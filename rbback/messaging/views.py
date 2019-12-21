@@ -1,7 +1,8 @@
 from rest_framework.parsers import MultiPartParser
+from rest_framework import generics
 from messaging.utils import CreateRetrieveViewSet, CreateViewSet
 from messaging.serializers import (
-    MediaSerializer, ThreadSerializer, MessageSerializer)
+    MediaSerializer, ThreadSerializer, MessageSerializer, PublicSerializer)
 from messaging.models import Media, Thread, Message
 
 
@@ -21,3 +22,8 @@ class ThreadView(CreateRetrieveViewSet):
 class MessageView(CreateViewSet):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
+
+
+class PublicListView(generics.ListAPIView):
+    queryset = Thread.objects.filter(public=True)
+    serializer_class = PublicSerializer

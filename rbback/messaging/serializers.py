@@ -51,13 +51,27 @@ class MessageSerializer(serializers.ModelSerializer):
 
 class ThreadSerializer(serializers.ModelSerializer):
     messages = MessageSerializer(many=True, read_only=True)
+    message_count = serializers.SerializerMethodField(read_only=True)
+
+    def get_message_count(self, thread):
+        return thread.messages.count()
 
     class Meta:
         model = Thread
         fields = (
-            'thread_id', 'subject', 'messages', 'closed')
+            'thread_id',
+            'subject',
+            'messages',
+            'closed',
+            'public',
+            'message_count')
         extra_kwargs = {
             'url': {'lookup_field': 'thread_id'},
             'thread_id': {'read_only': True},
             'closed': {'read_only': True}
         }
+
+
+class PublicSerializer(ThreadSerializer):
+    class Meta(ThreadSerializer.Meta):
+        fields = ('thread_id', 'subject', 'closed', 'public', 'message_count')

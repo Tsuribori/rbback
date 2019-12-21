@@ -1,7 +1,8 @@
 from rest_framework.test import APITestCase
 from rest_framework.reverse import reverse
 from messaging.views import MediaView, ThreadView, MessageView
-from messaging.serializers import ThreadSerializer, MessageSerializer
+from messaging.serializers import (
+    ThreadSerializer, MessageSerializer, PublicSerializer)
 from seed.factories import MediaFactory, ThreadFactory, MessageFactory
 
 
@@ -82,3 +83,16 @@ class MessageViewTest(APITestCase):
         del data['media']
         resp = self.client.post(reverse('message-list'), data)
         self.assertEqual(resp.status_code, 400)
+
+
+class PublicViewTest(APITestCase):
+    def test_public_thread(self):
+        thread = PublicSerializer(instance=ThreadFactory(public=True))
+        resp = self.client.get(reverse('messaging_public_threads'))
+        self.assertEqual(thread.data, resp.data['results'][0])
+
+    def test_non_public_thread(self):
+        ThreadFactory()
+        resp = self.client.get(reverse('messaging_public_threads'))
+        # Check that 'results' is empty
+        self.assertTrue(len(resp.data['results']) == 0)

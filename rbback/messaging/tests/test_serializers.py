@@ -1,6 +1,6 @@
 from rest_framework.test import APITestCase
 from messaging.serializers import (
-    MediaSerializer, ThreadSerializer, MessageSerializer)
+    MediaSerializer, ThreadSerializer, MessageSerializer, PublicSerializer)
 from seed.factories import ThreadFactory, MessageFactory
 
 
@@ -35,6 +35,12 @@ class ThreadSerializerTest(APITestCase):
         self.assertEqual(
             thread_serializer.data['messages'][0], message_serializer.data)
 
+    def test_message_count(self):
+        thread = ThreadFactory()
+        MessageFactory(thread=thread)
+        thread_serializer = ThreadSerializer(instance=thread)
+        self.assertEqual(thread_serializer.data['message_count'], 1)
+
 
 class MessageSerializerTest(APITestCase):
     def test_thread_write_only(self):
@@ -45,3 +51,9 @@ class MessageSerializerTest(APITestCase):
         thread = ThreadFactory(closed=True)
         serializer = MessageSerializer(data=MessageFactory(thread=thread))
         self.assertFalse(serializer.is_valid())
+
+
+class PublicSerializerTest(APITestCase):
+    def test_no_messages(self):
+        fields = PublicSerializer.Meta.fields
+        self.assertFalse('messages' in fields)
