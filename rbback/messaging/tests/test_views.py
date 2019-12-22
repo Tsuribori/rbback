@@ -1,5 +1,6 @@
 from rest_framework.test import APITestCase
 from rest_framework.reverse import reverse
+from django.conf import settings
 from messaging.views import MediaView, ThreadView, MessageView
 from messaging.serializers import (
     ThreadSerializer, MessageSerializer, PublicSerializer)
@@ -96,3 +97,20 @@ class PublicViewTest(APITestCase):
         resp = self.client.get(reverse('messaging_public_threads'))
         # Check that 'results' is empty
         self.assertTrue(len(resp.data['results']) == 0)
+
+    def test_pagination(self):
+        thread = PublicSerializer(instance=ThreadFactory(public=True))
+        ThreadFactory.create_batch(
+            settings.REST_FRAMEWORK['PAGE_SIZE'], public=True)
+        resp = self.client.get(
+            reverse('messaging_public_threads'),
+            {'page': 2, 'offset': 100, 'limit': 100}
+        )
+        self.assertEqual(thread.data, resp.data['results'][0])
+
+    # Test that threads are returned ordered relative to pk descending
+    def test_ordering(self):
+        thread1 = PublicSerializer(instance=ThreadFactory(public=True))
+        PublicSerializer(instance=ThreadFactory(public=True))
+        resp = self.client.get(reverse('messaging_public_threads'))
+        self.assertEqual(thread1.data, resp.data['results'][1])

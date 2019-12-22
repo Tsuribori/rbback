@@ -25,5 +25,5 @@ class MessageView(CreateViewSet):
 
 
 class PublicListView(generics.ListAPIView):
-    queryset = Thread.objects.filter(public=True)
+    queryset = Thread.objects.filter(public=True).order_by('-pk')
     serializer_class = PublicSerializer
