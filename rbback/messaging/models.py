@@ -89,3 +89,6 @@ class Message(models.Model):
                 self.thread.closed = True
                 self.thread.save()
             super(Message, self).save(*args, **kwargs)
+
+    class Meta:
+        ordering = ['pk']

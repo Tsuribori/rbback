@@ -41,6 +41,15 @@ class ThreadSerializerTest(APITestCase):
         thread_serializer = ThreadSerializer(instance=thread)
         self.assertEqual(thread_serializer.data['message_count'], 1)
 
+    # Test that nested messages are in order relating to pk ascending
+    def test_message_ordering(self):
+        thread = ThreadFactory()
+        message = MessageFactory(thread=thread)
+        MessageFactory(thread=thread)
+        thread_serializer = ThreadSerializer(instance=thread)
+        self.assertEqual(
+            thread_serializer.data['messages'][0]['id'], message.id)
+
 
 class MessageSerializerTest(APITestCase):
     def test_thread_write_only(self):
