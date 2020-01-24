@@ -6,8 +6,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost']
 
-USE_X_FORWARDED_HOST = True
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',

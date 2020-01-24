@@ -9,9 +9,6 @@ MAX_POSTS = 500
 
 ALLOWED_HOSTS = [os.environ.get('HOST')]
 
-USE_X_FORWARDED_HOST = True
-X_FRAME_OPTIONS = 'DENY'
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',

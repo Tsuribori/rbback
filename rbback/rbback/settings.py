@@ -143,6 +143,12 @@ FILE_UPLOAD_PERMISSIONS = 0o644
 ALLOWED_EXTENSIONS = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif']
 
 
+# Security settings
+
+X_FRAME_OPTIONS = 'DENY'
+USE_X_FORWARDED_HOST = True
+SECURE_REFERRER_POLICY = "same-origin"
+
 # Max Messages per Thread
 
 MAX_POSTS = 15
