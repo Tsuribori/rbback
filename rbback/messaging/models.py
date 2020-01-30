@@ -41,7 +41,12 @@ class Media(models.Model, IDSigner):
         thumb_filename = thumb_name + '.jpg'
 
         temp_thumb = BytesIO()
-        image.save(temp_thumb, image.format)
+        image.save(
+            temp_thumb,
+            image.format,
+            quality=10,
+            optimize=True
+        )
         temp_thumb.seek(0)
 
         self.thumbnail.save(
