@@ -1,5 +1,6 @@
 import os
 import factory
+from django.contrib.auth.models import User
 from messaging.models import Media, Thread, Message
 
 
@@ -28,3 +29,8 @@ class MessageFactory(factory.DjangoModelFactory):
     post = 'Test post'
     thread = factory.SubFactory(ThreadFactory)
     media = factory.SubFactory(MediaFactory)
+
+
+class UserFactory():
+    def __new__(cls):
+        return User.objects.create_superuser(username="test", password="test")
