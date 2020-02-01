@@ -22,7 +22,9 @@ class ThreadModel(TestCase):
 
     def test_str(self):
         self.assertEqual(
-            self.thread.__str__(), self.thread.thread_id)
+            self.thread.__str__(),
+            "{}: {}".format(self.thread.thread_id, self.thread.subject)
+        )
 
 
 class MessageModel(TestCase):

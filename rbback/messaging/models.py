@@ -64,7 +64,7 @@ class Thread(models.Model, IDSigner):
     public = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.thread_id
+        return "{}: {}".format(self.thread_id, self.subject)
 
     def save(self, *args, **kwargs):
         if not self.thread_id:
