@@ -6,6 +6,9 @@ else
   settings_module=rbback.prod_settings
 fi
 
+# Create compressed tarball of source to static folder to be served.
+tar --exclude-from=.gitignore -czvf rbback/static/rbback.tar.gz .
+
 cd rbback
 until python manage.py migrate --no-input --settings=$settings_module; do
   sleep 2
