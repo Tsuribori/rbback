@@ -7,7 +7,7 @@ else
 fi
 
 # Create compressed tarball of source to static folder to be served.
-tar --exclude-from=.gitignore -czvf rbback/static/rbback.tar.gz .
+tar --exclude-from=.gitignore --exclude .git -czvf rbback/static/rbback.tar.gz .
 
 cd rbback
 until python manage.py migrate --no-input --settings=$settings_module; do
