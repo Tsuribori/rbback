@@ -16,6 +16,10 @@ class ThreadAdmin(admin.ModelAdmin):
     hide_thread.short_description = "Hide selected threads"
 
 
+class MessageAdmin(admin.ModelAdmin):
+    ordering = ['-date']
+
+
 admin.site.register(Media, MediaAdmin)
 admin.site.register(Thread, ThreadAdmin)
-admin.site.register(Message)
+admin.site.register(Message, MessageAdmin)
