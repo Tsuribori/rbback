@@ -37,7 +37,7 @@ class MediaSerializer(serializers.ModelSerializer):
 
 class MessageSerializer(serializers.ModelSerializer):
     thread = ThreadField()
-    media = MediaField()
+    media = MediaField(allow_null=True, required=False)
 
     def validate_thread(self, value):
         if value.closed:

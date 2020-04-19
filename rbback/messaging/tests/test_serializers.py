@@ -56,11 +56,6 @@ class MessageSerializerTest(APITestCase):
         serializer = MessageSerializer(instance=MessageFactory())
         self.assertFalse('thread' in serializer.data)
 
-    def test_thread_closed(self):
-        thread = ThreadFactory(closed=True)
-        serializer = MessageSerializer(data=MessageFactory(thread=thread))
-        self.assertFalse(serializer.is_valid())
-
 
 class PublicSerializerTest(APITestCase):
     def test_no_messages(self):

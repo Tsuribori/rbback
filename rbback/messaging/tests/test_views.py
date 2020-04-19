@@ -75,13 +75,23 @@ class MessageViewTest(APITestCase):
         resp = self.client.post(reverse('message-list'), data)
         self.assertEqual(resp.status_code, 400)
 
-    def test_invalid_media_post(self):
+    def test_no_media_provided_post(self):
         msg = MessageSerializer(instance=MessageFactory())
         thread = ThreadFactory()
         data = msg.data.copy()
         data['thread'] = thread.thread_id
         del data['id']
         del data['media']
+        resp = self.client.post(reverse('message-list'), data)
+        self.assertEqual(resp.status_code, 201)
+
+    def test_thread_closed(self):
+        thread = ThreadFactory(closed=True)
+        data = MessageSerializer(
+            instance=MessageFactory(thread=thread)).data.copy()
+        data['thread'] = thread.thread_id
+        del data["id"]
+        del data["media"]
         resp = self.client.post(reverse('message-list'), data)
         self.assertEqual(resp.status_code, 400)
 
